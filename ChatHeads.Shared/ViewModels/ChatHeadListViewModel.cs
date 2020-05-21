@@ -1,5 +1,7 @@
 ﻿using ChatHeads.Data;
 using ChatHeads.Shared.Models;
+using ChatHeads.Shared.Requests;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Xml.Serialization;
@@ -10,30 +12,25 @@ namespace ChatHeads.Shared.ViewModels
 {
     public class ChatHeadListViewModel : ListViewModel<ChatHeadItemViewModel>
     {
-        public ChatHeadListViewModel()
+        private readonly IMediator _mediator;
+
+        public ChatHeadListViewModel(IMediator mediator)
         {
             var listener = UserNotificationListener.Current;
             listener.NotificationChanged += ListenerOnNotificationChanged;
+
+            _mediator = mediator;
         }
 
         private async void ListenerOnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
             if (args.ChangeKind == UserNotificationChangedKind.Added)
             {
-                using var dbContext = new NotificationsContext();
-                var notification = await dbContext.Notification.FirstOrDefaultAsync(x => x.Id == args.UserNotificationId);
-                if (notification == null) return;
+                var notification = await _mediator.Send(new QueryNotificationRequest { Id = args.UserNotificationId });
+                //    var vm = new ChatHeadItemViewModel();
+                //    vm.ImageSource = test?.Visual?.Binding?.Image.Src;
 
-                var serializer = new XmlSerializer(typeof(Toast));
-                using (var reader = new StringReader(notification?.Payload))
-                {
-                    var test = (Toast)serializer.Deserialize(reader);
-
-                    var vm = new ChatHeadItemViewModel();
-                    vm.ImageSource = test?.Visual?.Binding?.Image.Src;
-
-                    Add(vm);
-                }
+                //    Add(vm);
             }
         }
     }

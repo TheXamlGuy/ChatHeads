@@ -29,6 +29,8 @@ namespace ChatHeads.Navigation
         {
             var viewModel = _provider.Resolve<object>($"{name}ViewModel");
             if (viewModel == null) return;
+
+            flyout.DataContext = viewModel;
         }
     }
 }

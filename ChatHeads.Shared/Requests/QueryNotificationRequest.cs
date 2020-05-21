@@ -5,6 +5,6 @@ namespace ChatHeads.Shared.Requests
 {
     public class QueryNotificationRequest : IRequest<Notification>
     { 
-        public int Id { get; set; }
+        public uint Id { get; set; }
     }
 }
