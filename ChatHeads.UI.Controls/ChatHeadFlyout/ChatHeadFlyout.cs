@@ -23,7 +23,7 @@ namespace ChatHeads.UI.Controls
         public IEnumerable ItemsSource
         {
             get => (IEnumerable)GetValue(ItemsSourceProperty);
-            set => SetValue(PlacementProperty, value);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public ChatHeadFlyoutPlacement Placement
@@ -31,8 +31,6 @@ namespace ChatHeads.UI.Controls
             get => (ChatHeadFlyoutPlacement)GetValue(PlacementProperty);
             set => SetValue(PlacementProperty, value);
         }
-
-        public void Hide() => _host.Hide();
 
         public void Show() => _host.Show();
 

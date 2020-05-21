@@ -12,10 +12,7 @@ namespace ChatHeads.UI.Helpers
         private static readonly bool _multiMonitorSupport;
         private readonly IntPtr _monitorHandle;
 
-        static ScreenHelper()
-        {
-            _multiMonitorSupport = GetSystemMetrics(SM_CMONITORS) != 0;
-        }
+        static ScreenHelper() => _multiMonitorSupport = GetSystemMetrics(SM_CMONITORS) != 0;
 
         internal ScreenHelper(IntPtr monitorHandle)
         {

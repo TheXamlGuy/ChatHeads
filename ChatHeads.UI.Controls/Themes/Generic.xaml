@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/ChatHeads.UI.Controls;component/ChatHeadFlyout/ChatHeadFlyoutPresenter.xaml" />
+        <ResourceDictionary Source="/ChatHeads.UI.Controls;component/ChatHeadFlyout/ChatHeadFlyoutItem.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -2,8 +2,8 @@
 
 namespace ChatHeads.UI.Controls
 {
-    public class ChatHeadFlyoutItem : Control
+    public class ChatHeadFlyoutItem : ContentControl
     {
-
+        public ChatHeadFlyoutItem() => DefaultStyleKey = typeof(ChatHeadFlyoutItem);
     }
 }
