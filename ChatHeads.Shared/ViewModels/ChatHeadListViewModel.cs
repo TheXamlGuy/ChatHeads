@@ -26,11 +26,18 @@ namespace ChatHeads.Shared.ViewModels
         {
             if (args.ChangeKind == UserNotificationChangedKind.Added)
             {
-                var notification = await _mediator.Send(new QueryNotificationRequest { Id = args.UserNotificationId });
-                //    var vm = new ChatHeadItemViewModel();
-                //    vm.ImageSource = test?.Visual?.Binding?.Image.Src;
+                var notification = await _mediator.Send(new QueryChatHeadNotificationRequest { Id = args.UserNotificationId });
+                
+                if (notification != null)
+                {
+                    var vm = new ChatHeadItemViewModel
+                    {
+                        ImageSource = notification.ImageSource
+                    };
 
-                //    Add(vm);
+                    Add(vm);
+                }
+         
             }
         }
     }

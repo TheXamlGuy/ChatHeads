@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ChatHeads.Shared.Requests
 {
-    public class QueryNotificationRequest : IRequest<Notification>
+    public class QueryChatHeadNotificationRequest : IRequest<ChatHeadNotification>
     { 
         public uint Id { get; set; }
     }
