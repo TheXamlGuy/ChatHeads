@@ -2,7 +2,8 @@
     x:Class="ChatHeads.Views.ChatHeadFlyout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:ChatHeads.UI.Controls;assembly=ChatHeads.UI.Controls">
+    xmlns:controls="clr-namespace:ChatHeads.UI.Controls;assembly=ChatHeads.UI.Controls"
+    ItemsSource="{Binding}">
     <controls:ChatHeadFlyout.ItemTemplate>
         <DataTemplate>
             <Image Source="{Binding ImageSource}" />

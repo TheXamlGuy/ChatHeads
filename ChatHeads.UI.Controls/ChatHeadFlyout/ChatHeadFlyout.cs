@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace ChatHeads.UI.Controls
 {
-    public class ChatHeadFlyout : DependencyObject
+    public class ChatHeadFlyout : FrameworkElement
     {
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register(nameof(ItemsSource),
@@ -47,6 +47,12 @@ namespace ChatHeads.UI.Controls
         private void PrepareHost()
         {
             var presenter = new ChatHeadFlyoutPresenter();
+            BindingOperations.SetBinding(presenter, DataContextProperty, new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(DataContext))
+            });
+
             BindingOperations.SetBinding(presenter, ItemsControl.ItemsSourceProperty, new Binding
             {
                 Source = this,
