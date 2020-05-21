@@ -1,6 +1,6 @@
 ﻿namespace ChatHeads.Shared.Models
 {
-    public class Notificaiton
+    public class Notification
     {
     }
 }
