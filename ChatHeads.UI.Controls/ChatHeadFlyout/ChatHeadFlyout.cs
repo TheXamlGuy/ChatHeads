@@ -11,9 +11,13 @@ namespace ChatHeads.UI.Controls
             DependencyProperty.Register(nameof(ItemsSource),
                 typeof(IEnumerable), typeof(ChatHeadFlyout));
 
-        public static readonly DependencyProperty PlacementProperty = 
+        public static readonly DependencyProperty ItemTemplateProperty =
+            DependencyProperty.Register(nameof(ItemTemplate),
+                typeof(DataTemplate), typeof(ChatHeadFlyout));
+
+        public static readonly DependencyProperty PlacementProperty =
             DependencyProperty.Register(nameof(Placement),
-                typeof(ChatHeadFlyoutPlacement), typeof(ChatHeadFlyout), 
+                typeof(ChatHeadFlyoutPlacement), typeof(ChatHeadFlyout),
                 new PropertyMetadata(ChatHeadFlyoutPlacement.Top));
 
         private ChatHeadFlyoutHost _host;
@@ -24,6 +28,12 @@ namespace ChatHeads.UI.Controls
         {
             get => (IEnumerable)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
+        }
+
+        public DataTemplate ItemTemplate
+        {
+            get => (DataTemplate)GetValue(ItemTemplateProperty);
+            set => SetValue(ItemTemplateProperty, value);
         }
 
         public ChatHeadFlyoutPlacement Placement
@@ -41,6 +51,12 @@ namespace ChatHeads.UI.Controls
             {
                 Source = this,
                 Path = new PropertyPath(nameof(ItemsSource))
+            });
+
+            BindingOperations.SetBinding(presenter, ItemsControl.ItemTemplateProperty, new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(ItemTemplate))
             });
 
             _host = new ChatHeadFlyoutHost

@@ -3,25 +3,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:ChatHeads.UI.Controls"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
-    <system:Double x:Key="ChatHeadFlyoutItemHeight">48</system:Double>
-    <system:Double x:Key="ChatHeadFlyoutItemWidth">48</system:Double>
-    <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">48</CornerRadius>
-    <Style TargetType="local:ChatHeadFlyoutItem">
+    <system:Double x:Key="ChatHeadFlyoutItemHeight">50</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemWidth">50</system:Double>
+    <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">50</CornerRadius>
+    <Style TargetType="controls:ChatHeadFlyoutItem">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ChatHeadFlyoutItem">
-                    <Border
+                    <Grid
                         Width="{StaticResource ChatHeadFlyoutItemHeight}"
                         Height="{StaticResource ChatHeadFlyoutItemWidth}"
-                        CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}">
-                        <ContentPresenter
-                            x:Name="ContentPresenter"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </Border>
+                        Margin="0,0,0,12">
+                        <Border
+                            Name="MaskBorder"
+                            Background="#FFFFFFFF"
+                            CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}" />
+                        <Grid>
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=MaskBorder}" />
+                            </Grid.OpacityMask>
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Grid>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

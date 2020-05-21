@@ -22,9 +22,10 @@ namespace ChatHeads.Shared.ViewModels
             {
                 using var dbContext = new NotificationsContext();
                 var notification = await dbContext.Notification.FirstOrDefaultAsync(x => x.Id == args.UserNotificationId);
+                if (notification == null) return;
 
                 var serializer = new XmlSerializer(typeof(Toast));
-                using (var reader = new StringReader(notification.Payload))
+                using (var reader = new StringReader(notification?.Payload))
                 {
                     var test = (Toast)serializer.Deserialize(reader);
 
@@ -32,9 +33,7 @@ namespace ChatHeads.Shared.ViewModels
                     vm.ImageSource = test?.Visual?.Binding?.Image.Src;
 
                     Add(vm);
-
                 }
-
             }
         }
     }
