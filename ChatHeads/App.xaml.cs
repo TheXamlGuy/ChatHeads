@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using ChatHeads.Shared.ViewModels;
-using ChatHeads.UI.Controls;
+using ChatHeads.Views;
 
 namespace ChatHeads
 {
@@ -9,7 +8,7 @@ namespace ChatHeads
     {
         protected override void OnStartup(StartupEventArgs args)
         {
-            App.Current.Dispatcher.Invoke(() => {
+            Current.Dispatcher.Invoke(() => {
                 var flyout = new ChatHeadFlyout
                 {
                     ItemsSource = new ChatHeadListViewModel()

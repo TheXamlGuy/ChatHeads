@@ -4,6 +4,6 @@ namespace ChatHeads.Shared.ViewModels
 {
     public class ChatHeadItemViewModel : ObservableObject
     {
-
+        public string ImageSource { get; set; }
     }
 }

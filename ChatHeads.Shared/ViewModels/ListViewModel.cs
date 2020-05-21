@@ -9,44 +9,32 @@ namespace ChatHeads.Shared.ViewModels
     {
         private SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
 
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
             if (SynchronizationContext.Current == _synchronizationContext)
             {
-                // Execute the CollectionChanged event on the current thread
-                RaiseCollectionChanged(e);
+                RaiseCollectionChanged(args);
             }
             else
             {
-                // Raises the CollectionChanged event on the creator thread
-                _synchronizationContext.Send(RaiseCollectionChanged, e);
+                _synchronizationContext.Send(RaiseCollectionChanged, args);
             }
         }
 
-        private void RaiseCollectionChanged(object param)
-        {
-            // We are in the creator thread, call the base implementation directly
-            base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
-        }
+        private void RaiseCollectionChanged(object param) => base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             if (SynchronizationContext.Current == _synchronizationContext)
             {
-                // Execute the PropertyChanged event on the current thread
-                RaisePropertyChanged(e);
+                RaisePropertyChanged(args);
             }
             else
             {
-                // Raises the PropertyChanged event on the creator thread
-                _synchronizationContext.Send(RaisePropertyChanged, e);
+                _synchronizationContext.Send(RaisePropertyChanged, args);
             }
         }
 
-        private void RaisePropertyChanged(object param)
-        {
-            // We are in the creator thread, call the base implementation directly
-            base.OnPropertyChanged((PropertyChangedEventArgs)param);
-        }
+        private void RaisePropertyChanged(object param) => base.OnPropertyChanged((PropertyChangedEventArgs)param);
     }
 }

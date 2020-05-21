@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public string Playload { get; set; }
+        public string Payload { get; set; }
     }
 }

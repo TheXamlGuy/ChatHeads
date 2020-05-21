@@ -1,16 +1,27 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:ChatHeads.UI.Controls">
+    xmlns:controls="clr-namespace:ChatHeads.UI.Controls"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:Double x:Key="ChatHeadFlyoutItemHeight">48</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemWidth">48</system:Double>
+    <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">48</CornerRadius>
     <Style TargetType="local:ChatHeadFlyoutItem">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:ChatHeadFlyoutItem">
+                <ControlTemplate TargetType="controls:ChatHeadFlyoutItem">
                     <Border
-                        Width="48"
-                        Height="48"
-                        Background="Red"
-                        CornerRadius="78" />
+                        Width="{StaticResource ChatHeadFlyoutItemHeight}"
+                        Height="{StaticResource ChatHeadFlyoutItemWidth}"
+                        CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
