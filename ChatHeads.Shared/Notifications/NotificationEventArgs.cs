@@ -2,7 +2,7 @@
 
 namespace ChatHeads.Shared.Notifications
 {
-    public class ChatHeadNotificationEventArgs
+    public class NotificationEventArgs
     {
         public Notification Notification { get; internal set; }
         public bool Handled { get; set; }

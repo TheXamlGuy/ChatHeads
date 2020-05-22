@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -7,6 +8,11 @@ namespace ChatHeads.UI.Controls
 {
     public class ChatHeadFlyout : FrameworkElement
     {
+        public static readonly DependencyProperty ItemContainerTemplateSelectorProperty =
+            DependencyProperty.Register(nameof(ItemContainerTemplateSelector),
+                typeof(ItemContainerTemplateSelector), typeof(ChatHeadFlyout),
+                new PropertyMetadata(new ChatHeadFlyoutPresenterTemplateSelector()));
+
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register(nameof(ItemsSource),
                 typeof(IEnumerable), typeof(ChatHeadFlyout));
@@ -20,9 +26,19 @@ namespace ChatHeads.UI.Controls
                 typeof(ChatHeadFlyoutPlacement), typeof(ChatHeadFlyout),
                 new PropertyMetadata(ChatHeadFlyoutPlacement.Top));
 
+        public static readonly DependencyProperty UsesItemContainerTemplateProperty =
+            DependencyProperty.Register(nameof(UsesItemContainerTemplate),
+                typeof(bool), typeof(ChatHeadFlyout));
+
         private ChatHeadFlyoutHost _host;
 
         public ChatHeadFlyout() => PrepareHost();
+
+        public ItemContainerTemplateSelector ItemContainerTemplateSelector
+        {
+            get => (ItemContainerTemplateSelector)GetValue(ItemContainerTemplateSelectorProperty);
+            set => SetValue(ItemContainerTemplateSelectorProperty, value);
+        }
 
         public IEnumerable ItemsSource
         {
@@ -42,15 +58,37 @@ namespace ChatHeads.UI.Controls
             set => SetValue(PlacementProperty, value);
         }
 
+        public bool UsesItemContainerTemplate
+        {
+            get => (bool)GetValue(UsesItemContainerTemplateProperty);
+            set => SetValue(UsesItemContainerTemplateProperty, value);
+        }
+
         public void Show() => _host.Show();
 
         private void PrepareHost()
         {
-            var presenter = new ChatHeadFlyoutPresenter();
+            var presenter = new ChatHeadFlyoutPresenter
+            {
+                Owner = this
+            };
+
             BindingOperations.SetBinding(presenter, DataContextProperty, new Binding
             {
                 Source = this,
                 Path = new PropertyPath(nameof(DataContext))
+            });
+
+            BindingOperations.SetBinding(presenter, ChatHeadFlyoutPresenter.UsesItemContainerTemplateProperty, new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(UsesItemContainerTemplate))
+            });
+
+            BindingOperations.SetBinding(presenter, ChatHeadFlyoutPresenter.ItemContainerTemplateSelectorProperty, new Binding
+            {
+                Source = this,
+                Path = new PropertyPath(nameof(ItemContainerTemplateSelector))
             });
 
             BindingOperations.SetBinding(presenter, ItemsControl.ItemsSourceProperty, new Binding

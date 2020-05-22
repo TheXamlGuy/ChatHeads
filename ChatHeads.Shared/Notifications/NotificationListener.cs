@@ -1,30 +1,34 @@
 ﻿using ChatHeads.Shared.Requests;
 using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
 
 namespace ChatHeads.Shared.Notifications
 {
-    public class ChatHeadNotification : IChatHeadNotification
+    public class NotificationListener : INotificationListener
     {
         private readonly UserNotificationListener _listener;
         private readonly IMediator _mediator;
-        private readonly IList<IChatHeadNotificationHandler> _notificationHandlers;
+        private readonly IList<INotificationHandler> _notificationHandlers;
 
-        public ChatHeadNotification(IMediator mediator, IList<IChatHeadNotificationHandler> notificationHandlers)
+        public NotificationListener(IMediator mediator, IList<INotificationHandler> notificationHandlers)
         {
             _mediator = mediator;
             _notificationHandlers = notificationHandlers;
 
             _listener = UserNotificationListener.Current;
-            _listener.NotificationChanged += OnNotificationChanged;
         }
 
-        ~ChatHeadNotification()
+        ~NotificationListener()
         {
             _listener.NotificationChanged -= OnNotificationChanged;
         }
+
+        public void Start() => _listener.NotificationChanged += OnNotificationChanged;
+
+        public void Stop() => _listener.NotificationChanged -= OnNotificationChanged;
 
         private async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
         {
@@ -33,8 +37,8 @@ namespace ChatHeads.Shared.Notifications
                 var notification = await _mediator.Send(new QueryNotificationRequest { Id = args.UserNotificationId });
                 if (notification != null)
                 {
-                    var eventArgs = new ChatHeadNotificationEventArgs { Notification = notification };
-                    foreach (var notificationHandler in _notificationHandlers)
+                    var eventArgs = new NotificationEventArgs { Notification = notification };
+                    foreach (var notificationHandler in _notificationHandlers.ToList())
                     {
                         if (eventArgs.Handled) break;
                         notificationHandler.OnHandleChatHeadNotification(eventArgs);

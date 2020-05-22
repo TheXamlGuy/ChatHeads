@@ -14,6 +14,9 @@
                         Width="{StaticResource ChatHeadFlyoutItemHeight}"
                         Height="{StaticResource ChatHeadFlyoutItemWidth}"
                         Margin="0,0,0,12">
+                        <Border HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <TextBlock Text="{TemplateBinding NotificationCount}" />
+                        </Border>
                         <Border
                             Name="MaskBorder"
                             Background="#FFFFFFFF"

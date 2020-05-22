@@ -3,10 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:ChatHeads.UI.Controls;assembly=ChatHeads.UI.Controls"
-    ItemsSource="{Binding}">
-    <controls:ChatHeadFlyout.ItemTemplate>
-        <DataTemplate>
-            <Image Source="{Binding ImageSource}" />
-        </DataTemplate>
-    </controls:ChatHeadFlyout.ItemTemplate>
+    xmlns:viewModels="clr-namespace:ChatHeads.Shared.ViewModels;assembly=ChatHeads.Shared"
+    ItemsSource="{Binding}"
+    UsesItemContainerTemplate="True">
+    <controls:ChatHeadFlyout.Resources>
+        <ItemContainerTemplate DataType="{x:Type viewModels:ChatHeadItemViewModel}">
+            <controls:ChatHeadFlyoutItem NotificationCount="{Binding NotificationCount}">
+                <Button Content="Cock" />
+            </controls:ChatHeadFlyoutItem>
+        </ItemContainerTemplate>
+    </controls:ChatHeadFlyout.Resources>
 </controls:ChatHeadFlyout>

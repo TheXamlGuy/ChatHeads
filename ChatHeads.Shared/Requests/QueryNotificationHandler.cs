@@ -24,7 +24,7 @@ namespace ChatHeads.Shared.Requests
             return new Notification
             {
                 Id = notification.Id,
-                GroupId = notification.GroupId,
+                Group = notification.Group,
                 ImageSource = imageSource
             };
         }

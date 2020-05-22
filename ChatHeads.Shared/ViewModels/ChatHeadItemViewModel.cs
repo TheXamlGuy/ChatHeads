@@ -3,20 +3,20 @@ using ChatHeads.Shared.Notifications;
 
 namespace ChatHeads.Shared.ViewModels
 {
-    public class ChatHeadItemViewModel : ObservableObject, IChatHeadNotificationHandler
+    public class ChatHeadItemViewModel : ObservableObject, INotificationHandler
     {
-        public uint GroupId { get; set; }
+        public string Group { get; set; }
         public uint Id { get; set; }
         public string ImageSource { get; set; }
 
-        public ChatHeadItemViewModel(IChatHeadNotificationSubscriber groupNotificationSubscriber)
+        public ChatHeadItemViewModel(INotificationSubscriber notificationSubscriber)
         {
-            groupNotificationSubscriber.Subscribe(this);
+            notificationSubscriber.Subscribe(this);
         }
 
-        public void OnHandleChatHeadNotification(ChatHeadNotificationEventArgs args)
+        public void OnHandleChatHeadNotification(NotificationEventArgs args)
         {
-            if (args.Notification.GroupId == GroupId)
+            if (args.Notification.Group == Group)
             {
                 args.Handled = true;
             }
