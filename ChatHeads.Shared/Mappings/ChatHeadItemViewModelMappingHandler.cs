@@ -7,8 +7,9 @@ namespace ChatHeads.Shared.Mappings
     {
         public ChatHeadItemViewModel Map(Notification source, ChatHeadItemViewModel destination)
         {
-            destination.Id = source.Id;
+            destination.Id = source.Id; 
             destination.Group = source.Group;
+            destination.ImageSource = source.ImageSource;
 
             return destination;
         }

@@ -8,8 +8,11 @@
     UsesItemContainerTemplate="True">
     <controls:ChatHeadFlyout.Resources>
         <ItemContainerTemplate DataType="{x:Type viewModels:ChatHeadItemViewModel}">
-            <controls:ChatHeadFlyoutItem NotificationCount="{Binding NotificationCount}">
-                <Button Content="Cock" />
+            <controls:ChatHeadFlyoutItem NumericBadge="{Binding NotificationCount, Mode=TwoWay}">
+                <Image
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Source="{Binding ImageSource}"
+                    Stretch="UniformToFill" />
             </controls:ChatHeadFlyoutItem>
         </ItemContainerTemplate>
     </controls:ChatHeadFlyout.Resources>

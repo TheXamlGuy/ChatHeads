@@ -6,6 +6,11 @@
     <system:Double x:Key="ChatHeadFlyoutItemHeight">50</system:Double>
     <system:Double x:Key="ChatHeadFlyoutItemWidth">50</system:Double>
     <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">50</CornerRadius>
+    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinWidth">16</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinHeight">16</system:Double>
+    <CornerRadius x:Key="ChatHeadFlyoutItemBadgeCornerRadius">8</CornerRadius>
+    <SolidColorBrush x:Key="ChatHeadFlyoutItemNumericBadgeBackgroundBrush" Color="#FFE44436" />
+    <Thickness x:Key="ChatHeadFlyoutItemBadgemargin">0 -3 0 0</Thickness>
     <Style TargetType="controls:ChatHeadFlyoutItem">
         <Setter Property="Template">
             <Setter.Value>
@@ -14,19 +19,41 @@
                         Width="{StaticResource ChatHeadFlyoutItemHeight}"
                         Height="{StaticResource ChatHeadFlyoutItemWidth}"
                         Margin="0,0,0,12">
-                        <Border HorizontalAlignment="Right" VerticalAlignment="Top">
-                            <TextBlock Text="{TemplateBinding NotificationCount}" />
-                        </Border>
                         <Border
                             Name="MaskBorder"
-                            Background="#FFFFFFFF"
-                            CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}" />
+                            Background="Blue"
+                            CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True" />
                         <Grid>
                             <Grid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=MaskBorder}" />
                             </Grid.OpacityMask>
-                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True" />
                         </Grid>
+                        <Border
+                            MinWidth="{StaticResource ChatHeadFlyoutItemBadgeMinWidth}"
+                            MinHeight="{StaticResource ChatHeadFlyoutItemBadgeMinHeight}"
+                            Margin="{StaticResource ChatHeadFlyoutItemBadgemargin}"
+                            Padding="6,0,6,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="{StaticResource ChatHeadFlyoutItemNumericBadgeBackgroundBrush}"
+                            CornerRadius="{StaticResource ChatHeadFlyoutItemBadgeCornerRadius}">
+                            <ContentControl
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding NumericBadge"
+                                ContentTemplate="{TemplateBinding NumericBadgeTemplate}"
+                                TextBlock.FontSize="11"
+                                TextBlock.FontWeight="SemiBold"
+                                TextBlock.Foreground="White"
+                                TextBlock.LineHeight="15" />
+                        </Border>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
