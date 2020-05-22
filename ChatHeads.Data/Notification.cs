@@ -2,8 +2,8 @@
 {
     public class Notification
     {
-        public int Id { get; set; }
-
+        public uint Id { get; set; }
+        public uint GroupId { get; set; }
         public string Payload { get; set; }
     }
 }

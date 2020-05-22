@@ -4,32 +4,26 @@ using System.Collections.Generic;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
 
-namespace ChatHeads.Shared.Notifications
+namespace ChatHeads.Shared.ChatHeadNotifications
 {
-    public class ChatHeadNotifier : IChatHeadNotifier
+    public class ChatHeadNotificationMediator : IChatHeadNotificationMediator
     {
         private readonly UserNotificationListener _listener;
         private readonly IMediator _mediator;
-        private IList<IChatHeadNotification> _notifications;
+        private readonly IList<IChatHeadNotificationHandler> _notificationHandlers;
 
-        public ChatHeadNotifier(IMediator mediator)
+        public ChatHeadNotificationMediator(IMediator mediator, IList<IChatHeadNotificationHandler> notificationHandlers)
         {
             _mediator = mediator;
-            _notifications = new List<IChatHeadNotification>();
+            _notificationHandlers = notificationHandlers;
 
             _listener = UserNotificationListener.Current;
             _listener.NotificationChanged += OnNotificationChanged;
         }
 
-        ~ChatHeadNotifier()
+        ~ChatHeadNotificationMediator()
         {
             _listener.NotificationChanged -= OnNotificationChanged;
-        }
-
-        public void Subscribe(IChatHeadNotification notification)
-        {
-            if (!_notifications.Contains(notification))
-                _notifications.Add(notification);
         }
 
         private async void OnNotificationChanged(UserNotificationListener sender, UserNotificationChangedEventArgs args)
@@ -39,7 +33,12 @@ namespace ChatHeads.Shared.Notifications
                 var notification = await _mediator.Send(new QueryNotificationRequest { Id = args.UserNotificationId });
                 if (notification != null)
                 {
-
+                    var eventArgs = new ChatHeadNotificationEventArgs { };
+                    foreach (var notificationHandler in _notificationHandlers)
+                    {
+                        if (eventArgs.Handled) break;
+                        notificationHandler.OnHandleChatHeadNotification(eventArgs);
+                    }
                 }
             }
         }

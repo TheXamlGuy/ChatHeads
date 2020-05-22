@@ -9,9 +9,9 @@ using Notification = ChatHeads.Shared.Models.Notification;
 
 namespace ChatHeads.Shared.Requests
 {
-    public class QueryNotificationHandler : IRequestHandler<QueryChatHeadNotificationRequest, Notification>
+    public class QueryNotificationHandler : IRequestHandler<QueryNotificationRequest, Notification>
     {
-        public async Task<Notification> Handle(QueryChatHeadNotificationRequest request, CancellationToken cancellationToken)
+        public async Task<Notification> Handle(QueryNotificationRequest request, CancellationToken cancellationToken)
         {
             using var dbContext = new NotificationsContext();
             var notification = await dbContext.Notification.FirstOrDefaultAsync(x => x.Id == request.Id);
@@ -21,9 +21,10 @@ namespace ChatHeads.Shared.Requests
             XElement imageElement = xml.XPathSelectElement($".//image");
 
             var imageSource = (string)imageElement?.Attribute("src");
-
             return new Notification
             {
+                Id = notification.Id,
+                GroupId = notification.GroupId,
                 ImageSource = imageSource
             };
         }

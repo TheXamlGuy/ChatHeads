@@ -1,22 +1,25 @@
-﻿using ChatHeads.Shared.Helpers;
-using ChatHeads.Shared.Notifications;
+﻿using ChatHeads.Shared.ChatHeadNotifications;
+using ChatHeads.Shared.Helpers;
 
 namespace ChatHeads.Shared.ViewModels
 {
-    public class ChatHeadItemViewModel : ObservableObject, IChatHeadNotification
+    public class ChatHeadItemViewModel : ObservableObject, IChatHeadNotificationHandler
     {
         public uint GroupId { get; set; }
         public uint Id { get; set; }
         public string ImageSource { get; set; }
 
-        public ChatHeadItemViewModel(IChatHeadNotifier notifier)
+        public ChatHeadItemViewModel(IChatHeadNotificationSubscriber groupNotificationSubscriber)
         {
-            notifier.Subscribe(this);
+            groupNotificationSubscriber.Subscribe(this);
         }
 
-        public void OnNotificationChanged()
+        public void OnHandleChatHeadNotification(ChatHeadNotificationEventArgs args)
         {
-
+            if (args.GroupId == GroupId)
+            {
+                args.Handled = true;
+            }
         }
     }
 }
