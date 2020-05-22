@@ -3,6 +3,7 @@ using System.Windows;
 using ChatHeads.Navigation;
 using ChatHeads.Shared.Extensions;
 using ChatHeads.Shared.LifeCycle;
+using ChatHeads.Shared.Notifications;
 using ChatHeads.Shared.Requests;
 using ChatHeads.Shared.ViewModels;
 using ChatHeads.Views;
@@ -30,6 +31,9 @@ namespace ChatHeads
             new ContainerProvider(provider.GetService,
                 name => provider.GetServices<IServiceByNameFactory>().FirstOrDefault(x => x.Name == name)
                 ?.GetService())).AddMediatR(typeof(QueryNotificationHandler))
+            .AddTransient<IChatHeadFlyoutService, ChatHeadFlyoutService>()
+            .AddTransient<IChatHeadNotification, ChatHeadNotification>()
+            .AddTransient<IChatHeadNotificationSubscriber, ChatHeadNotificationSubscriber>()
             .AddTransient<IChatHeadFlyoutService, ChatHeadFlyoutService>()
             .AddViewWithViewModel<ChatHeadFlyout, ChatHeadListViewModel>();
     }

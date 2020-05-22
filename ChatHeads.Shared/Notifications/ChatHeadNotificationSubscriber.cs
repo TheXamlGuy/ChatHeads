@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ChatHeads.Shared.ChatHeadNotifications
+namespace ChatHeads.Shared.Notifications
 {
-    public class ChatHeadGroupNotificationSubscriber : IChatHeadNotificationSubscriber
+    public class ChatHeadNotificationSubscriber : IChatHeadNotificationSubscriber
     {
         private readonly IList<IChatHeadNotificationHandler> _groupNotifications;
-        public ChatHeadGroupNotificationSubscriber(IList<IChatHeadNotificationHandler> groupNotifications)
+        public ChatHeadNotificationSubscriber(IList<IChatHeadNotificationHandler> groupNotifications)
         {
             _groupNotifications = groupNotifications;
         }

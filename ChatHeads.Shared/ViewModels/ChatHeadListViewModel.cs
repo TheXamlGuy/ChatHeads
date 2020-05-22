@@ -1,4 +1,4 @@
-﻿using ChatHeads.Shared.ChatHeadNotifications;
+﻿using ChatHeads.Shared.Notifications;
 
 namespace ChatHeads.Shared.ViewModels
 {

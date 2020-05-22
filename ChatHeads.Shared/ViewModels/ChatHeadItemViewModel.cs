@@ -1,5 +1,5 @@
-﻿using ChatHeads.Shared.ChatHeadNotifications;
-using ChatHeads.Shared.Helpers;
+﻿using ChatHeads.Shared.Helpers;
+using ChatHeads.Shared.Notifications;
 
 namespace ChatHeads.Shared.ViewModels
 {
@@ -16,7 +16,7 @@ namespace ChatHeads.Shared.ViewModels
 
         public void OnHandleChatHeadNotification(ChatHeadNotificationEventArgs args)
         {
-            if (args.GroupId == GroupId)
+            if (args.Notification.GroupId == GroupId)
             {
                 args.Handled = true;
             }

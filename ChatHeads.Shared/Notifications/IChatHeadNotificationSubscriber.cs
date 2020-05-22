@@ -1,4 +1,4 @@
-﻿namespace ChatHeads.Shared.ChatHeadNotifications
+﻿namespace ChatHeads.Shared.Notifications
 {
     public interface IChatHeadNotificationSubscriber
     {
