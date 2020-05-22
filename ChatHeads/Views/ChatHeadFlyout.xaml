@@ -6,7 +6,7 @@
     ItemsSource="{Binding}">
     <controls:ChatHeadFlyout.ItemTemplate>
         <DataTemplate>
-            <Image Source="{Binding ImageSource}" />
+            <Image Source="{Binding ImageSource, ElementName=}" />
         </DataTemplate>
     </controls:ChatHeadFlyout.ItemTemplate>
 </controls:ChatHeadFlyout>

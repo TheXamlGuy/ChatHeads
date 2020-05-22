@@ -1,6 +1,6 @@
 ﻿namespace ChatHeads.Shared.Models
 {
-    public class ChatHeadNotification
+    public class Notification
     {
         public string ImageSource { get; set; }
     }

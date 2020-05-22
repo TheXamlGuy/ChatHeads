@@ -29,7 +29,7 @@ namespace ChatHeads
             services.AddSingleton<IContainerProvider>(provider =>
             new ContainerProvider(provider.GetService,
                 name => provider.GetServices<IServiceByNameFactory>().FirstOrDefault(x => x.Name == name)
-                ?.GetService())).AddMediatR(typeof(QueryChatHeadNotificationHandler))
+                ?.GetService())).AddMediatR(typeof(QueryNotificationHandler))
             .AddTransient<IChatHeadFlyoutService, ChatHeadFlyoutService>()
             .AddViewWithViewModel<ChatHeadFlyout, ChatHeadListViewModel>();
     }
