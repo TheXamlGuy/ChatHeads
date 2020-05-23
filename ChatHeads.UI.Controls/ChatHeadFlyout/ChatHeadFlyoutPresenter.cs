@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,10 +7,9 @@ namespace ChatHeads.UI.Controls
 {
     internal class ChatHeadFlyoutPresenter : ItemsControl
     {
-        public static readonly DependencyProperty ItemContainerTemplateSelectorProperty =
-            DependencyProperty.Register(nameof(ItemContainerTemplateSelector),
-                typeof(ItemContainerTemplateSelector), typeof(ChatHeadFlyoutPresenter),
-                new PropertyMetadata(new ChatHeadFlyoutPresenterTemplateSelector()));
+        public static readonly DependencyProperty ItemContainerTemplateCollectionProperty =
+            DependencyProperty.Register(nameof(ItemContainerTemplateCollection),
+                typeof(ItemContainerTemplateCollection), typeof(ChatHeadFlyoutPresenter));
 
         public static readonly DependencyProperty UsesItemContainerTemplateProperty =
             DependencyProperty.Register(nameof(UsesItemContainerTemplate),
@@ -21,10 +21,10 @@ namespace ChatHeads.UI.Controls
 
         public ChatHeadFlyoutPresenter() => DefaultStyleKey = typeof(ChatHeadFlyoutPresenter);
 
-        public ItemContainerTemplateSelector ItemContainerTemplateSelector
+        public ItemContainerTemplateCollection ItemContainerTemplateCollection
         {
-            get => (ItemContainerTemplateSelector)GetValue(ItemContainerTemplateSelectorProperty);
-            set => SetValue(ItemContainerTemplateSelectorProperty, value);
+            get => (ItemContainerTemplateCollection)GetValue(ItemContainerTemplateCollectionProperty);
+            set => SetValue(ItemContainerTemplateCollectionProperty, value);
         }
 
         public bool UsesItemContainerTemplate
@@ -40,13 +40,15 @@ namespace ChatHeads.UI.Controls
 
             if (!UsesItemContainerTemplate) return new ChatHeadFlyoutItem();
 
-            var dataTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
+            var itemType = currentItem.GetType();
+
+            var dataTemplate = ItemContainerTemplateCollection.FirstOrDefault(x => x.DataType == (object)itemType);
             if (dataTemplate == null) return new ChatHeadFlyoutItem();
 
             var itemContainer = dataTemplate.LoadContent();
             if (itemContainer is ChatHeadFlyoutItem)
                 return itemContainer;
-            throw new InvalidOperationException(nameof(itemContainer));
+            throw new InvalidOperationException(nameof(currentItem));
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)

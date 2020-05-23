@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,10 +7,9 @@ namespace ChatHeads.UI.Controls
 {
     public class ChatHeadFlyout : FrameworkElement
     {
-        public static readonly DependencyProperty ItemContainerTemplateSelectorProperty =
-            DependencyProperty.Register(nameof(ItemContainerTemplateSelector),
-                typeof(ItemContainerTemplateSelector), typeof(ChatHeadFlyout),
-                new PropertyMetadata(new ChatHeadFlyoutPresenterTemplateSelector()));
+        public static readonly DependencyProperty ItemContainerTemplateCollectionProperty =
+            DependencyProperty.Register(nameof(ItemContainerTemplateCollection),
+                typeof(ItemContainerTemplateCollection), typeof(ChatHeadFlyout));
 
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register(nameof(ItemsSource),
@@ -32,12 +30,16 @@ namespace ChatHeads.UI.Controls
 
         private ChatHeadFlyoutHost _host;
 
-        public ChatHeadFlyout() => PrepareHost();
-
-        public ItemContainerTemplateSelector ItemContainerTemplateSelector
+        public ChatHeadFlyout()
         {
-            get => (ItemContainerTemplateSelector)GetValue(ItemContainerTemplateSelectorProperty);
-            set => SetValue(ItemContainerTemplateSelectorProperty, value);
+            ItemContainerTemplateCollection = new ItemContainerTemplateCollection();
+            PrepareHost();
+        }
+
+        public ItemContainerTemplateCollection ItemContainerTemplateCollection
+        {
+            get => (ItemContainerTemplateCollection)GetValue(ItemContainerTemplateCollectionProperty);
+            set => SetValue(ItemContainerTemplateCollectionProperty, value);
         }
 
         public IEnumerable ItemsSource
@@ -85,10 +87,10 @@ namespace ChatHeads.UI.Controls
                 Path = new PropertyPath(nameof(UsesItemContainerTemplate))
             });
 
-            BindingOperations.SetBinding(presenter, ChatHeadFlyoutPresenter.ItemContainerTemplateSelectorProperty, new Binding
+            BindingOperations.SetBinding(presenter, ChatHeadFlyoutPresenter.ItemContainerTemplateCollectionProperty, new Binding
             {
                 Source = this,
-                Path = new PropertyPath(nameof(ItemContainerTemplateSelector))
+                Path = new PropertyPath(nameof(ItemContainerTemplateCollection))
             });
 
             BindingOperations.SetBinding(presenter, ItemsControl.ItemsSourceProperty, new Binding

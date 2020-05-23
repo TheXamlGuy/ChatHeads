@@ -10,6 +10,7 @@ namespace ChatHeads.Shared.Mappings
             destination.Id = source.Id; 
             destination.Group = source.Group;
             destination.ImageSource = source.ImageSource;
+            destination.NotificationBadgeCount = 1;
 
             return destination;
         }

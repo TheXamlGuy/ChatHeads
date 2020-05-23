@@ -13,14 +13,14 @@ namespace ChatHeads.Shared.ViewModels
         public string Group { get; set; }
         public uint Id { get; set; }
         public string ImageSource { get; set; }
-        public int NotificationCount { get; set; }
+        public int NotificationBadgeCount { get; set; } 
 
         public void OnHandleChatHeadNotification(NotificationEventArgs args)
         {
             if (args.Notification.Group == Group)
             {
                 args.Handled = true;
-                NotificationCount++;
+                NotificationBadgeCount++;
             }
         }
     }

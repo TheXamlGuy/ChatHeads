@@ -3,15 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:ChatHeads.UI.Controls"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
-    <system:Double x:Key="ChatHeadFlyoutItemHeight">50</system:Double>
-    <system:Double x:Key="ChatHeadFlyoutItemWidth">50</system:Double>
-    <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">50</CornerRadius>
-    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinWidth">16</system:Double>
-    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinHeight">16</system:Double>
-    <CornerRadius x:Key="ChatHeadFlyoutItemBadgeCornerRadius">8</CornerRadius>
-    <SolidColorBrush x:Key="ChatHeadFlyoutItemNumericBadgeBackgroundBrush" Color="#FFE44436" />
+    <FontFamily x:Key="SemiLightContentControlThemeFontFamily">Segoe UI Semilight</FontFamily>
+    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
+    <system:Double x:Key="ChatHeadFlyoutItemHeight">60</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemWidth">60</system:Double>
+    <CornerRadius x:Key="ChatHeadFlyoutItemCornerRadius">30</CornerRadius>
+    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinWidth">18</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemBadgeMinHeight">18</system:Double>
+    <system:Double x:Key="ChatHeadFlyoutItemBadgeMaxHeight">18</system:Double>
+    <CornerRadius x:Key="ChatHeadFlyoutItemBadgeCornerRadius">9</CornerRadius>
+    <SolidColorBrush x:Key="ChatHeadFlyoutItemBadgeForegroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ChatHeadFlyoutItemBadgeBackgroundBrush" Color="#FF1F1F1F" />
+    <SolidColorBrush x:Key="ChatHeadFlyoutItemNotificationBadgeBackgroundBrush" Color="#FFFE2E00" />
     <Thickness x:Key="ChatHeadFlyoutItemBadgemargin">0 -3 0 0</Thickness>
     <Style TargetType="controls:ChatHeadFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+        <Setter Property="Background" Value="{StaticResource ChatHeadFlyoutItemBadgeBackgroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ChatHeadFlyoutItem">
@@ -19,16 +26,24 @@
                         Width="{StaticResource ChatHeadFlyoutItemHeight}"
                         Height="{StaticResource ChatHeadFlyoutItemWidth}"
                         Margin="0,0,0,12">
-                        <Border
-                            Name="MaskBorder"
-                            Background="Blue"
-                            CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}"
-                            SnapsToDevicePixels="True"
-                            UseLayoutRounding="True" />
+                        <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}">
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="16"
+                                    Opacity="0.8"
+                                    ShadowDepth="0" />
+                            </Border.Effect>
+                        </Border>
                         <Grid>
                             <Grid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=MaskBorder}" />
                             </Grid.OpacityMask>
+                            <Border
+                                Name="MaskBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource ChatHeadFlyoutItemCornerRadius}"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True" />
                             <ContentPresenter
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -38,21 +53,29 @@
                         <Border
                             MinWidth="{StaticResource ChatHeadFlyoutItemBadgeMinWidth}"
                             MinHeight="{StaticResource ChatHeadFlyoutItemBadgeMinHeight}"
+                            MaxHeight="{StaticResource ChatHeadFlyoutItemBadgeMaxHeight}"
                             Margin="{StaticResource ChatHeadFlyoutItemBadgemargin}"
                             Padding="6,0,6,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Background="{StaticResource ChatHeadFlyoutItemNumericBadgeBackgroundBrush}"
+                            Background="{StaticResource ChatHeadFlyoutItemNotificationBadgeBackgroundBrush}"
                             CornerRadius="{StaticResource ChatHeadFlyoutItemBadgeCornerRadius}">
                             <ContentControl
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Content="{TemplateBinding NumericBadge"
-                                ContentTemplate="{TemplateBinding NumericBadgeTemplate}"
-                                TextBlock.FontSize="11"
+                                Content="{TemplateBinding NotificationBadge}"
+                                ContentTemplate="{TemplateBinding NotificationBadgeTemplate}"
+                                TextBlock.FontSize="12"
                                 TextBlock.FontWeight="SemiBold"
-                                TextBlock.Foreground="White"
-                                TextBlock.LineHeight="15" />
+                                TextBlock.Foreground="{StaticResource ChatHeadFlyoutItemBadgeForegroundBrush}"
+                                TextBlock.LineHeight="12"
+                                TextBlock.LineStackingStrategy="BlockLineHeight" />
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="4"
+                                    Opacity="0.4"
+                                    ShadowDepth="0" />
+                            </Border.Effect>
                         </Border>
                     </Grid>
                 </ControlTemplate>

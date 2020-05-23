@@ -5,26 +5,26 @@ namespace ChatHeads.UI.Controls
 {
     public class ChatHeadFlyoutItem : ContentControl
     {
-        public static readonly DependencyProperty NumericBadgeProperty =
-            DependencyProperty.Register(nameof(NumericBadge),
+        public static readonly DependencyProperty NotificationBadgeProperty =
+            DependencyProperty.Register(nameof(NotificationBadge),
                 typeof(object), typeof(ChatHeadFlyoutItem));
 
-        public static readonly DependencyProperty NumericBadgeTemplateProperty =
-            DependencyProperty.Register(nameof(NumericBadgeTemplate),
+        public static readonly DependencyProperty NotificationBadgeTemplateProperty =
+            DependencyProperty.Register(nameof(NotificationBadgeTemplate),
                 typeof(DataTemplate), typeof(ChatHeadFlyoutItem));
 
         public ChatHeadFlyoutItem() => DefaultStyleKey = typeof(ChatHeadFlyoutItem);
 
-        public object NumericBadge
+        public object NotificationBadge
         {
-            get => GetValue(NumericBadgeProperty);
-            set => SetValue(NumericBadgeProperty, value);
+            get => GetValue(NotificationBadgeProperty);
+            set => SetValue(NotificationBadgeProperty, value);
         }
 
-        public DataTemplate NumericBadgeTemplate
+        public DataTemplate NotificationBadgeTemplate
         {
-            get => (DataTemplate)GetValue(NumericBadgeTemplateProperty);
-            set => SetValue(NumericBadgeTemplateProperty, value);
+            get => (DataTemplate)GetValue(NotificationBadgeTemplateProperty);
+            set => SetValue(NotificationBadgeTemplateProperty, value);
         }
     }
 }

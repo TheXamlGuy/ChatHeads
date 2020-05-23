@@ -6,14 +6,14 @@
     xmlns:viewModels="clr-namespace:ChatHeads.Shared.ViewModels;assembly=ChatHeads.Shared"
     ItemsSource="{Binding}"
     UsesItemContainerTemplate="True">
-    <controls:ChatHeadFlyout.Resources>
+    <controls:ChatHeadFlyout.ItemContainerTemplateCollection>
         <ItemContainerTemplate DataType="{x:Type viewModels:ChatHeadItemViewModel}">
-            <controls:ChatHeadFlyoutItem NumericBadge="{Binding NotificationCount, Mode=TwoWay}">
+            <controls:ChatHeadFlyoutItem NotificationBadge="{Binding NotificationBadgeCount}">
                 <Image
                     RenderOptions.BitmapScalingMode="HighQuality"
                     Source="{Binding ImageSource}"
                     Stretch="UniformToFill" />
             </controls:ChatHeadFlyoutItem>
         </ItemContainerTemplate>
-    </controls:ChatHeadFlyout.Resources>
+    </controls:ChatHeadFlyout.ItemContainerTemplateCollection>
 </controls:ChatHeadFlyout>
