@@ -22,7 +22,7 @@ namespace ChatHeads.UI.Controls
         public static readonly DependencyProperty PlacementProperty =
             DependencyProperty.Register(nameof(Placement),
                 typeof(ChatHeadFlyoutPlacement), typeof(ChatHeadFlyout),
-                new PropertyMetadata(ChatHeadFlyoutPlacement.Top));
+                new PropertyMetadata(ChatHeadFlyoutPlacement.Left));
 
         public static readonly DependencyProperty UsesItemContainerTemplateProperty =
             DependencyProperty.Register(nameof(UsesItemContainerTemplate),

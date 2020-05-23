@@ -2,8 +2,7 @@
 {
     public enum ChatHeadFlyoutPlacement
     {
-        Top,
-        Left,
-        Right
+        Left = 0,
+        Right = 1
     }
 }

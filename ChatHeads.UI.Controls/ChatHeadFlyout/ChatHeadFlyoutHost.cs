@@ -11,12 +11,17 @@ namespace ChatHeads.UI.Controls
         public static readonly DependencyProperty PlacementProperty =
             DependencyProperty.Register(nameof(Placement),
                 typeof(ChatHeadFlyoutPlacement), typeof(ChatHeadFlyoutHost),
-                new PropertyMetadata(ChatHeadFlyoutPlacement.Top, OnPlacementPropertyChanged));
+                new PropertyMetadata(ChatHeadFlyoutPlacement.Left, OnPlacementPropertyChanged));
 
         private static void OnPlacementPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var sender = dependencyObject as ChatHeadFlyoutHost;
             sender?.OnPlacementPropertyChanged();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            SetPlacement();
         }
 
         private void OnPlacementPropertyChanged() => SetPlacement();
@@ -49,6 +54,8 @@ namespace ChatHeads.UI.Controls
 
         public ChatHeadFlyoutHost()
         {
+            Loaded += OnLoaded;
+
             AllowsTransparency = true;
             WindowStyle = WindowStyle.None;
             ShowActivated = true;
@@ -78,8 +85,6 @@ namespace ChatHeads.UI.Controls
 
                 var windowBounds = WindowHelper.GetBounds(this);
 
-                var topDistance = workingArea.Top + windowBounds.Top + Height / 2;
-
                 var leftDistance = workingArea.Left + windowBounds.Left + Width / 2;
                 var rightDistance = workingArea.Width - windowBounds.Left + Width / 2;
 
@@ -93,6 +98,8 @@ namespace ChatHeads.UI.Controls
                 {
                     SetValue(PlacementProperty, ChatHeadFlyoutPlacement.Left);
                 }
+
+                SetPlacement();
             }
         }
     }
